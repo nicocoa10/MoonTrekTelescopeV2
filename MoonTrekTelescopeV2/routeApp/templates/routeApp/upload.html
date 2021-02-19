@@ -1,10 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--main upload html page where the file is sent in the url as POST request -->
+<!--This is where you can add bootstrap or css front end stuff -->
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    {% load static %}
 </head>
 <body>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ upload_form.as_p }}
+
+                <button type="submit" class="button">Submit Your Photo Here</button>
+
+            </form>
 
 </body>
 </html>
