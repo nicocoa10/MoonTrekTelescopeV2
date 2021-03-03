@@ -2,13 +2,13 @@ from django.shortcuts import render
 import requests
 from .forms import MoonPostForm
 
-from .processing.imageProcedure import ImageProcceses
+from .processing.imageProcedure import RoutedImageCapture
 # Create your views here.
 
 def displayView(request):
 
 
-    capture = ImageProcceses ()
+    capture = RoutedImageCapture ()
 
     processed_image_path = capture.processUserImage()
 
@@ -40,6 +40,24 @@ def upload (request):
 
 
     return render(request,'routeApp/upload.html', context= my_form)
+
+
+
+
+
+def index(request):
+
+    return render(request,'routeApp/index.html', context = { })
+
+
+
+
+
+
+
+
+
+
 
 
 

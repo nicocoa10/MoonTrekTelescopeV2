@@ -1,6 +1,13 @@
 import requests
+from cv2 import *
+import numpy as np
+# import matplotlib.pyplot as plt
+import operator
+import os
+import glob
 
-class ImageProcceses:
+
+class RoutedImageCapture:
 
     def __init__(self):
         self.image_raw_root = 'MoonTrekTelescopeV2/media/user_images_raw/userMoon.png'
@@ -13,12 +20,35 @@ class ImageProcceses:
         # what needs to be processed is to cut it in the edges
         #once is cut and processed save the image in the folder static/user_images_processed/
 
-        self.image_processed_root = 'user_images_processed/userMoon.png'
+        ### Circle Detection
+        # img = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/media/user_images_raw/userMoon.png', cv2.IMREAD_COLOR)
+        # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        # detected_circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 0.5, 100, param1=420, param2=10)
+        # if detected_circles is not None:
+        #     detected_circles = np.uint16(np.around(detected_circles))
+        #     x, y, radius = int(detected_circles[0][0][0]), int(detected_circles[0][0][1]), int(
+        #         detected_circles[0][0][2])
+        #     center = (x, y)
+        #     cv2.circle(img, center, 1, (0, 255, 0), 1)
+        #     cv2.circle(img, center, radius, (0, 0, 255), 2)
+        # hight = img.shape[0]
+        # width = img.shape[1]
+        # # cv2_imshow(img)
+        # # cv2.waitKey(0)
+        # # cv2.destroyAllWindows()
+        self.image_processed_root = 'user_images_processed/_KC_5091.JPG'
+
+        # some code here to process the WAC to be able to be used later in our 3D model
+        # what needs to be processed is to cut it in the edges
+        # once is cut and processed save the image in the folder static/WAC_resized/
+        self.map_resize()
 
         return self.image_processed_root
 
 
+    def map_resize(self):
 
+        return None
     def processDegreeData(self):
 
         #some code here to acquire the right degree data
@@ -133,7 +163,7 @@ class ImageProcceses:
         #I guess main tasks for this method are ;
             #1. perform the most accurate registration with both images
             #2. produce an image registration image(the one with lines) and save it to static/usert_to_globe_registration
-            #3. Lastly , The most important task , that can probably be implemented in another method would be to get the right degree data (pixel per degree)
+            #3. Lastly , The most important task , that can probably be implemented in another method would be to get the right degree data (pixel per degree)/ parameters
 
 
         return None
