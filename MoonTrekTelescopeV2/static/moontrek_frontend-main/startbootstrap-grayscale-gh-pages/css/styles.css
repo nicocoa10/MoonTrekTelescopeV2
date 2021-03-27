@@ -1,3 +1,5 @@
+
+
 @charset "UTF-8";
 
         .imgbox {
@@ -10494,4 +10496,6 @@ body {
 
   }
 
-
+button {
+    margin: 10px;
+}

@@ -1,27 +1,27 @@
-import requests
+# import requests
 from cv2 import *
 import numpy as np
 # import matplotlib.pyplot as plt
 import operator
 import os
 import glob
+from PIL import Image
+import math
 
+from routeApp.models import MoonPost
 
 class RoutedImageCapture:
 
     def __init__(self):
-        self.image_raw_root = 'MoonTrekTelescopeV2/media/user_images_raw/userMoon.png'
+        self.image_raw_root = MoonPost.objects.last().user_image #This gets the last placed image in database
         self.image_processed_root=''
         self.degree_data = { }
 
     def processUserImage(self):
 
-        #some code here to process the image
-        # what needs to be processed is to cut it in the edges
-        #once is cut and processed save the image in the folder static/user_images_processed/
 
-        ### Circle Detection
-        img = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/media/user_images_raw/userMoon.png', cv2.IMREAD_COLOR)
+        ## Circle Detection
+        img = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/media/'+ str(self.image_raw_root), cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         detected_circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 0.5, 100, param1=420, param2=10)
         if detected_circles is not None:
@@ -29,24 +29,140 @@ class RoutedImageCapture:
             x, y, radius = int(detected_circles[0][0][0]), int(detected_circles[0][0][1]), int(
                 detected_circles[0][0][2])
             center = (x, y)
-            cv2.circle(img, center, 1, (0, 255, 0), 1)
-            cv2.circle(img, center, radius, (0, 0, 255), 2)
         hight = img.shape[0]
         width = img.shape[1]
-        # cv2_imshow(img)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
-        self.image_processed_root = 'user_images_processed/_KC_5091.JPG'
 
+        #crop image
+
+        yStart = y - radius
+        if (yStart < 0):
+            yStart = 0
+        yEnd = y + radius
+        if (yEnd > hight):
+            yEnd = hight
+        xStart = x - radius
+        if (xStart < 0):
+            xStart = 0
+        xEnd = x + radius
+        if (xEnd > width):
+            xEnd = width
+
+
+        croppedImg = img[yStart:yEnd, xStart:xEnd]
+
+        # add pixels to the image
+        top = y - radius
+        if (top >= 0):
+            top = 0
+        if (top < 0):
+            top = - (top)
+        bottom = y + radius
+        if (bottom <= hight):
+            bottom = 0
+        if (bottom > hight):
+            bottom = (bottom - hight)
+        left = x - radius
+        if (left >= 0):
+            left = 0
+        if (left < 0):
+            left = -(left)
+
+        right = x + radius
+        if (right <= width):
+            right = 0
+        if (right > width):
+            right = right - width
+        newImg = cv2.copyMakeBorder(croppedImg, top, bottom, left, right, cv2.BORDER_CONSTANT)
+
+        #save processed image
+        result = cv2.imwrite('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/user_images_processed/processed.jpg', newImg)
+        if result == True:
+            print("File saved successfully")
+        else:
+            print("Error in saving file")
+
+        cv2.waitKey(3)
+
+        self.image_processed_root = 'user_images_processed/processed.jpg'
+
+        # Produce a downsampled version of Globe Map
+
+        ppd = round(newImg.shape[1] / 360)
+        if (ppd <= 5):
+            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/05_LRO_ref.jpg')
+
+        if (ppd <= 7):
+            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/07_LRO_ref.jpg')
+
+        if (ppd <= 10):
+            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/10_LRO_ref.jpg')
+
+        if (ppd <= 15):
+            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/15_LRO_ref.jpg')
+
+        if (ppd <= 20):
+            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/20_LRO_ref.jpg')
+        # resize the map
+        newMap = cv2.resize(map, (newImg.shape[1], newImg.shape[0]))
+
+        print("H and W for new map", newImg.shape[0], newImg.shape[1])
+
+        print("shape of new map", newMap.shape)
+
+        # image regestration features matching (SIFT)
+        imgGray = cv2.cvtColor(newImg, cv2.COLOR_BGR2GRAY)
+        newMapGray = cv2.cvtColor(newMap, cv2.COLOR_BGR2GRAY)
+        sift = cv2.xfeatures2d.SIFT_create()
+        keypoints1, descriptors1 = sift.detectAndCompute(imgGray, None)
+        keypoints2, descriptors2 = sift.detectAndCompute(newMapGray, None)
+        bf = cv2.BFMatcher()
+        matches = bf.knnMatch(descriptors1, descriptors2, k=2)
+        good_matches = []
+        for m, n in matches:
+            if m.distance < 0.75 * n.distance:
+                good_matches.append([m])
+        imMatches = cv2.drawMatchesKnn(newImg, keypoints1, newMap, keypoints2, good_matches, None,
+                                       flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+        # cv2_imshow(imMatches)
+
+        cv2.waitKey(0)
+
+        print(imMatches)
+        print(len(good_matches))
+
+        result = cv2.imwrite(
+            '/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/user_to_globe_registration/registration.png',
+            imMatches)
+        if result == True:
+            print("File saved successfully")
+        else:
+            print("Error in saving file")
+
+        user_to_globe_root = 'user_to_globe_registration/registration.png'
+
+        roots= [self.image_processed_root , user_to_globe_root]
         # some code here to process the WAC to be able to be used later in our 3D model
         # what needs to be processed is to cut it in the edges
         # once is cut and processed save the image in the folder static/WAC_resized/
         self.map_resize()
 
-        return self.image_processed_root
+        return roots
+
+    # def process_reference_image(self):
+    #     #resize reference image
+    #     #produce a downsampled version of globe
+    #     #save downsampled version
+    # def perform_registration(self):
+    #     #now that you haave an accurate processed user image and a reference image perform registration
+    #
 
 
+
+
+#########################################################################################
     def map_resize(self):
+
+
 
         return None
     def processDegreeData(self):
@@ -113,15 +229,15 @@ class RoutedImageCapture:
 
         # making a get request to Moon Trek Portal for planet vector search where origin is earth
 
-        r = requests.get('https://trek.nasa.gov/los/planet-vector-search/moon/earth/' + time)
+        # r = requests.get('https://trek.nasa.gov/los/planet-vector-search/moon/earth/' + time)
+        #
+        # json_object = r.json()
+        # # print(json_object['positions']['earth'])
+        #
+        # # saving the obtained data in a dictionary
+        # vector_dic = json_object['positions']['earth']
 
-        json_object = r.json()
-        # print(json_object['positions']['earth'])
-
-        # saving the obtained data in a dictionary
-        vector_dic = json_object['positions']['earth']
-
-        return vector_dic
+        return
 
     def nearestPointAPICall(self, lon, lat, time):
         # At this point lon and lat are recieved in the correct format
@@ -129,19 +245,19 @@ class RoutedImageCapture:
         # time = '2019-10-07T01:10:45'
 
         # making a get request to Moon Trek Portal for planet vector search where origin is earth
-        r = requests.get('https://trek.nasa.gov/los/nearest-point/earth/moon/' + lon + '/' + lat + '/' + time)
-
-        json_object = r.json()
-        # print(type(json_object)) #just to test and print the contents of r to console , which should be the retrieved data
-
-        # saving the obtained data in a dictionary
-        nearestPoint_dic = json_object
-
-        return nearestPoint_dic
-    def latitudeToRectangular(self, lon, lat, time):
-        r = requests.get('https://trek.nasa.gov/los/lat-to-rect/earth/earth/' + lon + '/' + lat + '/' + time) # invalid request need to check with natalie
+        # r = requests.get('https://trek.nasa.gov/los/nearest-point/earth/moon/' + lon + '/' + lat + '/' + time)
+        #
         # json_object = r.json()
-        # latToRec_dic = json_object
+        # # print(type(json_object)) #just to test and print the contents of r to console , which should be the retrieved data
+        #
+        # # saving the obtained data in a dictionary
+        # nearestPoint_dic = json_object
+
+        return
+    def latitudeToRectangular(self, lon, lat, time):
+        # r = requests.get('https://trek.nasa.gov/los/lat-to-rect/earth/earth/' + lon + '/' + lat + '/' + time) # invalid request need to check with natalie
+        # # json_object = r.json()
+        # # latToRec_dic = json_object
 
         return 'latToRec_dic'
 

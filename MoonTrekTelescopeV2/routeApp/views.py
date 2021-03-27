@@ -1,5 +1,5 @@
 from django.shortcuts import render
-import requests
+# import requests
 from .forms import MoonPostForm
 
 from .processing.imageProcedure import RoutedImageCapture
@@ -10,12 +10,13 @@ def displayView(request):
 
     capture = RoutedImageCapture ()
 
-    processed_image_path = capture.processUserImage()
+    roots = capture.processUserImage()
 
     processed_degree_data = capture.processDegreeData()
 
     my_dict = {
-        'image_path' : processed_image_path,
+        'image_path' : roots[0],
+        'image_path1': roots[1],
         'degree_data': processed_degree_data,
     }
 
