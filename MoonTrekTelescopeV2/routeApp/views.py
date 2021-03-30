@@ -51,6 +51,10 @@ def index(request):
     return render(request,'routeApp/index.html', context = { })
 
 
+def test(request):
+
+    return render(request,'routeApp/test.html', context = { })
+
 
 
 

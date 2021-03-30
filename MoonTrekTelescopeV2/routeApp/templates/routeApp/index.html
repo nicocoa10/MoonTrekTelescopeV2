@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
@@ -15,6 +16,9 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/css/styles.css' %}" rel="stylesheet"  />
+        <script src="https://threejs.org/build/three.js"></script>
+        <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -37,17 +41,79 @@
             </div>
         </nav>
         <!-- Masthead-->
+
         <header class="masthead">
+
             <div class="container d-flex h-100 align-items-center">
                 <div class="mx-auto text-center">
 
+
                     <h1 class="mx-auto my-0 text-uppercase">NASA MoonTrek</h1>
-                    <input type ="image" class="moonButton" src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/lightMoon.png' %}" alt="" width=450px href="#about">
+
+<!--                        <input type ="image" class="moonButton" src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/lightMoon.png' %}" alt="" width=450px href="#about">-->
+                    <div id="moon-rotation"   >
+                        <script>
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera( 45, 1050/450, 0.1, 1000 );
+
+    var renderer = new THREE.WebGLRenderer( {alpha: true} );
+    renderer.setSize( 1050, 450 );
+    document.getElementById("moon-rotation").appendChild( renderer.domElement );
+    renderer.setClearColor( 0x000000, 0 );
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    camera.position.set( 0, 0, 0 );
+    controls.update();
+
+    const light = new THREE.PointLight( 0xffffff, 2, 200);
+    light.position.set( -50, 0, 50 );
+    light.castShadow = true;
+    scene.add( light );
+
+    light.shadow.mapSize.width = 512;
+    light.shadow.mapSize.height = 512;
+    light.shadow.camera.near = 0.5;
+    light.shadow.camera.far = 500;
+
+    var texture = new THREE.TextureLoader().load( "https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonColorMap2.jpg" );
+
+    var geometry = new THREE.SphereGeometry( 0.57, 62, 62);
+
+
+    var material = new THREE.MeshPhongMaterial( { map: texture } );
+
+    var sphere = new THREE.Mesh( geometry, material );
+
+    sphere.castShadow = true;
+    sphere.receiveShadow = true;
+    scene.add( sphere );
+
+
+    sphere.position.x = 0;
+
+    camera.position.z = 2;
+
+
+    var animate = function () {
+        requestAnimationFrame( animate );
+
+        sphere.rotation.y += 0.005;
+
+        renderer.render( scene, camera );
+    };
+
+    animate();
+</script>
+                    </div>
+
                     <h2 class="text-white-50 mx-auto mt-2 mb-5">MoonTrek visualization tool helps render your 2D images in a 3D environment.</h2>
 
                     <a class="btn btn-primary js-scroll-trigger" href=" {% url 'routeApp:upload' %} ">GET STARTED</a>
                 </div>
             </div>
+
         </header>
         <!-- About-->
         <!-- Projects-->

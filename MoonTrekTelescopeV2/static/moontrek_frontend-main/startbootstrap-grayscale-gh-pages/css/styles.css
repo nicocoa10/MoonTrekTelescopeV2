@@ -10478,10 +10478,9 @@ body {
   padding: 5rem 0;
 }
 .moonButton {
-    opacity: 1.0;
 }
 .moonButton:hover {
-    opacity: 0.6;
+
 }
 
 .image-information{
