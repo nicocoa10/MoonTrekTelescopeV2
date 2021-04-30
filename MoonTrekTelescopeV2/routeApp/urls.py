@@ -23,6 +23,6 @@ from routeApp import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('upload/', views.upload, name='upload'),
-    path('test/', views.test, name='test'),
+    path('3d_model/', views.display3DModel, name="3d_model")
 
 ]

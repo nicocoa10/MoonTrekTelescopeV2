@@ -77,3 +77,48 @@ document.querySelector('.userImage').onmousemove = (e) => {
 	e.target.style.setProperty('--y', `${ y }px`)
 
 }
+
+
+//alberts code ring and replace image
+
+function loadFile(event) {
+    var image = document.getElementById('output');
+    image.src = URL.createObjectURL(event.target.files[0]);
+
+    var text = document.getElementById('outputText');
+    document.getElementById("outputText").innerHTML ='Upload';
+
+};
+
+function spinRing(){
+    document.getElementById("loadingRing").style.visibility = "visible"
+};
+
+// code for the tutorial slideshow
+
+var slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName(".dot");
+  if (n > slides.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = slides.length}
+    for (i = 0; i < slides.length; i++) {
+      slides[i].style.display = "none";
+    }
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+  slides[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].className += " active";
+}

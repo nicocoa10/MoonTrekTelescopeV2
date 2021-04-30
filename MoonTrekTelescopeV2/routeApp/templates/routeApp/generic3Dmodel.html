@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/css/styles.css' %}" rel="stylesheet"  />
+    <title>Generic Model</title>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+.sidepanel  {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 450px;
+  margin-top: 2%;
+  margin-left: 2%;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.subpanel  {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 650px;
+  margin-top: 2%;
+  margin-left: 2%;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  color: white;
+}
+
+.sidepanel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+
+.subpanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+
+.openbtn {
+  position: absolute;
+  display: block;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  z-index: 99;
+  left: 2%;
+  margin-top: 2%;
+}
+
+.DataLayer {
+  display: none;
+  position: absolute;
+  display: block;
+  margin-top: 2%;
+  margin-left: 6%;
+  width: 5%
+}
+
+.openbtn:hover + .DataLayer {
+  background-color:rgb(187, 187, 187);
+  display: block;
+}
+
+.spTitle {
+  justify-content: stretch;
+  align-items: stretch;
+  margin-bottom: 6%;
+}
+
+.spImage {
+  justify-content: start;
+  align-items: stretch;
+  margin-bottom: 6%;
+
+}
+
+.spAtt{
+  color: #818181;
+  margin-top: 6%;
+  margin-bottom: 6%;
+
+}
+
+.spacer {
+  display:inline-block; width:35%; padding:10px
+}
+.spacer2 {
+  display:inline-block; width:35%; padding:10px
+}
+
+.slider {
+  position: absolute;
+  display: block;
+  top:8%;
+  left:87%;
+  width:10%;
+
+
+}
+    </style>
+    <script src="https://threejs.org/build/three.js"></script>
+    <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<!--  ------------------------------ Title ---------------------------------   -->
+<div style="bottom:1%; left:44%; font-size: larger; color: whitesmoke; position: absolute; display: block;"><p>MoonTrek Telescope 2.0 | Generic Moon 3D model</p></div>
+
+<!--  ------------------------------ Main Side Panel ---------------------------------   -->
+
+<div id="mySidepanel" class="sidepanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <div><button name="button1" class="spbtn" onclick="openNav1()" ><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData1Map.PNG" height=100 >Apollo 15 Metric Cam DEM, ColorHillshade</image></button>
+    </div>
+    <div><button name="button1" class="spbtn" onclick="openNav2()"><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData2Map.PNG" height=100 >Apollo 15 Metric Cam DEM, Colorized Confidence</image></button>
+    </div>
+    <div><button name="button1" class="spbtn" onclick="openNav3()"><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData3Map.PNG" height=100 >Clementine UVVIS FeO Weight-Percent</image></button>
+    </div>
+    <div><button name="button1" class="spbtn" onclick="openNav4()"><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData4Map.PNG" height=100 >GRAIL LUNAR GRAVITY RANGING SYSTEM, Bouguer Disturbances L180</image></button>
+    </div>
+  </div>
+
+  <button class="openbtn" onclick="openNav()" style="top:0">☰</button>
+  <div class="DataLayer" style="top:0">Data Layer</div>
+
+<!--  ------------------------------ Apollo 15 Metric Cam DEM, ColorHillshade Panel ---------------------------------   -->
+
+<div id="ColorHillshade" class="subpanel">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav1()">×</a>
+    <div class="spTitle">Apollo 15 Metric Cam DEM, ColorHillshade</div>
+    <div class="spImage"><button name="button2" class="button" onclick="toggle1()"><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData1Map.PNG" height=110 ></button></image><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonLayerLegend1.PNG" height=110 ></image>
+    </div>
+    <p>Click Above Image To Add Data Layer</p>
+    <div>
+      The Apollo 15 DEM color-shade is generated using the colormap and hillshade functions in Vision Workbench for the DEM files.
+      The min and max values of the colormap(legend.png)correspond to the range [-8499, 10208 in meters relative to the average moon radius of 1737.4km.
+      The DEM colorshade values are stored as 8-bit signed integer at 14.8m/pixel resolution. These DEM colorshade files were generated using the Vision Workbench
+      library: a software tool produced by the NASA Ames Intelligent Robotics Group(IRG)for automated processing of stereo imagery.
+    </div>
+    <div class="spAtt">Attributes</div>
+    <div><div class="spacer">Label:</div><div class="spacer2">Value</div></div>
+    <div><div class="spacer">bbox</div><div class="spacer2">	-65.9995117,-31.9995117,179.9995117,32.0004883</div></div>
+    <div class="spacer">instrument</div><div class="spacer2">	Metric Camera</div>
+    <div class="spacer">mission</div><div class="spacer2"> Apollo15</div>
+    <div class="spacer">product Type</div><div class="spacer2"> Topography / ColorHillshade</div>
+    </div>
+  </div>
+
+
+<!--  ------------------------------ Apollo 15 Metric Cam DEM, Colorized Confidence Panel ---------------------------------   -->
+
+<div id="ColorConfidence" class="subpanel">
+<a href="javascript:void(2)" class="closebtn" onclick="closeNav2()">×</a>
+<div class="spTitle">Apollo 15 Metric Cam DEM, Colorized Confidence</div>
+<div class="spImage"><button name="button2" class="button" onclick="toggle2()"><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData2Map.PNG" height=110 ></button><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonLayerLegend2.PNG" height=110 ></image>
+</div>
+<p>Click Above Image To Add Data Layer</p>
+<div>
+  The Apollo 15 DEM colorized confidence image is generated from the Apollo 15 DEM confidence data.
+  In the confidence data, the values are derived from the precision values. For the colorized confidence, the value range from 10 to 14 was used,
+  ranging from poor confidence (10) to very good confidence (14). This range was mapped to a color map varying from yellow to green.
+  All other confidence values were mapped to fully transparent pixels.
+</div>
+<div class="spAtt">Attributes</div>
+<div class="spacer">Label:</div><div class="spacer2">Value</div>
+<div class="spacer">bbox</div><div class="spacer2">	-180,-90,180,90</div>
+<div class="spacer">instrument</div><div class="spacer2">	Metric Camera</div>
+<div class="spacer">mission</div><div class="spacer2"> Apollo15</div>
+<div class="spacer">product Type	</div><div class="spacer2"> Topography / Confidence Colorized</div>
+
+</div>
+
+<!--  ------------------------------ Clementine UVVIS FeO Weight-Percent Panel ---------------------------------   -->
+
+<div id="WeightPercent" class="subpanel">
+<a href="javascript:void(3)" class="closebtn" onclick="closeNav3()">×</a>
+<div class="spTitle">Clementine UVVIS FeO Weight-Percent</div>
+<div class="spImage"><button name="button2" class="button" onclick="toggle3()"><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData3Map.PNG" height=100 ></image></button><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonLayerLegend3.PNG" height=90 ></image>
+</div>
+<p>Click Above Image To Add Data Layer</p>
+<div>
+  Clementine UVVIS derived mineral and optical maturity maps. These datasets were generated from the UVVIS mosaics warped to the ULCN2005 control network.
+  For more information on how the data set was derived, please see: Lucey, P.G., Blewett, D.T., Taylor, G.J., Hawke, B.R., 2000. Imaging of lunar surface maturity.
+  J. Geophys. Res. 105, 20377–20386. Lucey, P. G., G. J. Taylor, and E. Malaret , 1995, Abundance and distribution of iron on the Moon.
+  Science, vol. 268, p. 1150-1153. Lucey, P. G., D. T. Blewett, and B. R. Hawke, 1997, Mapping the FeO and TiO2 content of the lunar surface
+  with multispectral imagery. Journal of Geophysical Research, in press. Updated reference details: published in 1998 J. Geophys. Res., v. 103, no. E2, p. 3679
+</div>
+<div class="spAtt">Attributes</div>
+<div class="spacer">Label:</div><div class="spacer2">Value</div>
+<div class="spacer">bbox</div><div class="spacer2">	-180,-90,179.997,90</div>
+<div class="spacer">instrument</div><div class="spacer2">	UVVIS</div>
+<div class="spacer">mission</div><div class="spacer2"> Clementine</div>
+<div class="spacer">product Type</div><div class="spacer2"> Mineralogy</div>
+</div>
+
+<!--  ------------------------------ GRAIL LUNAR GRAVITY RANGING SYSTEM, Bouguer Disturbances L180 ---------------------------------   -->
+
+<div id="Disturbances" class="subpanel">
+<a href="javascript:void(4)" class="closebtn" onclick="closeNav4()">×</a>
+<div class="spTitle">GRAIL LUNAR GRAVITY RANGING SYSTEM, Bouguer Disturbances L180</div>
+<div class="spImage"><button name="button2" class="button" onclick="toggle4()" ><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData4Map.PNG" height=155 ></image></button><image src="https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonLayerLegend4.PNG" height=45 ></image>
+</div>
+<p>Click Above Image To Add Data Layer</p>
+<div>
+  This data product is a map of the Bouguer disturbances (in mGal) of the lunar gravity field at a resolution of 16 pix/deg by 16 pix/deg.
+  It is based on a GRAIL gravity field of the Moon produced by NASA GSFC called GRGM1200A.
+  GRGM1200A is a degree and order 1200 spherical harmonic model, which includes the entire mission of GRAIL tracking data.
+  The LOLA topography, expressed in the Principal Axes frame, was used to remove the contribution of the lunar relief (assuming a constant density of 2500 kg/m3).
+  The Bouguer disturbances are expanded in the spatial domain up to degree and order 180.
+  Some details describing this model are: The spherical harmonic coefficients are fully normalized (geodesy 4pi normalized).
+  The uncertainties are calibrated (the formal uncertainties multiplied by a factor of 1.635).
+  The reference radius = 1738.0 km The gravitational parameter is GM = 4902.80011526323 km**3/s**2 The planetary ephemeris used is de430 and defines
+  the lunar body-fixed coordinate system. A Kaula type power law constraint is applied to the spherical harmonics coefficients for degrees >600 (3.6e-4/n^2).
+  The weighting of the KBRR data is: 0.03 microns/sec in the primary mission 0.05 microns/sec in the extended mission The weighting of the
+  DSN data is: 0.12mm/s in both the primary and extended mission The nominal tidal Love number is k2 = 0.024133 +/- 0.000016 The current best reference
+  for the GRGM1200A gravity field is LEMOINEETAL2014, published in the Geophysical Research Letters with the DOI number 10.1002/2014GL060027 .
+  For additional details on the GRAIL mission, data and methods, see LEMOINEETAL2013. Each point gives the Lunar Bouguer gravity disturbance in milligals,
+  on a reference sphere with semi-major-axis = 1738.0 km, GM = 4902.80011526323 km**3/s**2, and zero rotation rate. As other lunar gravity fields,
+  the map is expressed in the Moon Principal Axes frame, which slightly differs from the Moon Mean Earth frame. For comparison with lunar topography,
+  users are advised to make use of the LOLA PDS products also archived in the Moon Principal Axes frame, such as the LDEM_64_PA product
+  in the LRO-L-LOLA-4-GDR-V1.0 dataset, which can be accessed at the PDS Geosciences Node or at the LOLA PDS Data node. Note also that
+  the reference radius for gravity (1738 km) and topography (1737.4 km) are different.
+</div>
+<div class="spAtt">Attributes</div>
+<div class="spacer">Label:</div><div class="spacer2">Value</div>
+<div class="spacer">bbox</div><div class="spacer2">	-180,-90,180,90</div>
+<div class="spacer">instrument</div><div class="spacer2">	LUNAR</div>
+<div class="spacer">mission</div><div class="spacer2">  GRAIL</div>
+<div class="spacer">product Type	</div><div class="spacer2"> Gravity / Disturbances</div>
+</div>
+
+
+<!--  ------------------------------ Fly To Form ---------------------------------   -->
+
+  <form class="form" name="myform" onSubmit="flyTo(); return false;">
+      <input style="position:absolute; top:80%; left:87%; width:10%;" type="text" name="LatInput" id="LatInput" placeholder="Latitude"/>
+      <input style="position:absolute; top:85%; left:87%; width:10%;" type="text" name="LonInput" id="LonInput" placeholder="Longitude" />
+      <input style="position:absolute; top:90%; left:87%; width:10.3%;" name="Submit"  type="submit" value="Fly To"/>
+
+  </form>
+
+    <a style="position:absolute; top:90%; right:87%; width:10.3%;" class="btn btn-success js-scroll-trigger" href=" {% url 'routeApp:upload' %} ">Upload Page</a>
+
+
+
+<!--  ------------------------------ Opacity Slider ---------------------------------   -->
+<input type="range" id="slider" min="0" max="1" step="0.01" value="1" class="slider" />
+<p style="position: absolute; display: block;top:10%; left:89%; width:10%; color:#f1f1f1;">Layer Opacity</p>
+
+
+<!--  ------------------------------ Zoom Button ---------------------------------   -->
+<!--
+<button class="openbtn" style="top:75%; width: 3%;" id="clickMe1">+</button>
+<button class="openbtn" style="top:82%; width: 3%;" id="clickMe2">-</button> -->
+
+
+<!--  ------------------------------ Navigation Scripts ---------------------------------   -->
+
+<script>
+function openNav() {
+  document.getElementById("mySidepanel").style.width = "250px";
+}
+function openNav1() {
+  document.getElementById("ColorHillshade").style.width = "350px";
+}
+function openNav2() {
+  document.getElementById("ColorConfidence").style.width = "350px";
+}
+function openNav3() {
+  document.getElementById("WeightPercent").style.width = "350px";
+}
+function openNav4() {
+  document.getElementById("Disturbances").style.width = "350px";
+}
+
+function closeNav() {
+  document.getElementById("mySidepanel").style.width = "0";
+}
+function closeNav1() {
+  document.getElementById("ColorHillshade").style.width = "0";
+}
+function closeNav2() {
+  document.getElementById("ColorConfidence").style.width = "0";
+}
+function closeNav3() {
+  document.getElementById("WeightPercent").style.width = "0";
+}
+function closeNav4() {
+  document.getElementById("Disturbances").style.width = "0";
+}
+
+</script>
+
+
+<!--  ------------------------------ MoonTrek Scripts ---------------------------------   -->
+
+
+<script>
+//////////////////////////// Camera and Scene ////////////////////////////////////
+
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera( 20, window.innerWidth/window.innerHeight, 0.1, 1000 );
+    camera.layers.enable(0);
+    camera.layers.disable(1);
+    camera.layers.disable(2);
+    camera.layers.disable(3);
+    camera.layers.disable(4);
+
+    var renderer = new THREE.WebGLRenderer( );
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    var controls = new THREE.OrbitControls(camera, renderer.domElement);
+    camera.position.set( 0, 0, 0 );
+    camera.zoom = 100;
+    controls.update();
+
+/////////////////////////// Light ///////////////////////////////////////////
+
+    const light = new THREE.PointLight( 0xffffff, 2, 200);
+    const light2 = new THREE.PointLight( 0xffffff, 1, 600);
+    const light3 = new THREE.PointLight( 0xffffff, 1, 600);
+    const light4 = new THREE.PointLight( 0xffffff, 1, 600);
+
+    light.layers.enable( 0 );
+	  light.layers.enable( 1 );
+	  light.layers.enable( 2 );
+    light.layers.enable( 3 );
+	  light.layers.enable( 4 );
+
+    light2.layers.enable( 0 );
+	  light2.layers.enable( 1 );
+	  light2.layers.enable( 2 );
+    light2.layers.enable( 3 );
+	  light2.layers.enable( 4 );
+
+    light3.layers.enable( 0 );
+	  light3.layers.enable( 1 );
+	  light3.layers.enable( 2 );
+    light3.layers.enable( 3 );
+	  light3.layers.enable( 4 );
+
+    light4.layers.enable( 0 );
+	  light4.layers.enable( 1 );
+	  light4.layers.enable( 2 );
+    light4.layers.enable( 3 );
+	  light4.layers.enable( 4 );
+
+    light.position.set( -100, 0, 0 );
+    light.castShadow = false;
+    scene.add( light );
+    light2.position.set( 100, 0, 0 );
+    light2.castShadow = false;
+    scene.add( light2 );
+    light3.position.set( -100, 0, -200 );
+    light3.castShadow = false;
+    scene.add( light3 );
+    light4.position.set( 100, 0, 200 );
+    light4.castShadow = false;
+    scene.add( light4 );
+
+    light.shadow.mapSize.width = 512;
+    light.shadow.mapSize.height = 512;
+    light.shadow.camera.near = 0.5;
+    light.shadow.camera.far = 500;
+
+///////////////////////////////// Moon Object //////////////////////////////////////////
+    var texture = new THREE.TextureLoader().load( "https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonColorMap2.jpg" );
+    var geometry = new THREE.SphereBufferGeometry( 0.27, 32, 32);
+    var material = new THREE.MeshPhongMaterial( { map: texture } );
+
+    var texture1 = new THREE.TextureLoader().load( "https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData1Map.PNG" );
+    var geometry1 = new THREE.SphereBufferGeometry( 0.27, 32, 32);
+    var material1 = new THREE.MeshPhongMaterial( { map: texture1 } );
+
+    var texture2 = new THREE.TextureLoader().load( "https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData2Map.PNG" );
+    var geometry2 = new THREE.SphereBufferGeometry( 0.27, 32, 32);
+    var material2 = new THREE.MeshPhongMaterial( { map: texture2 } );
+
+    var texture3 = new THREE.TextureLoader().load( "https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData3Map.PNG" );
+    var geometry3 = new THREE.SphereBufferGeometry( 0.27, 32, 32);
+    var material3 = new THREE.MeshPhongMaterial( { map: texture3 } );
+
+    var texture4 = new THREE.TextureLoader().load( "https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonData4Map.PNG" );
+    var geometry4 = new THREE.SphereBufferGeometry( 0.27, 32, 32);
+    var material4 = new THREE.MeshPhongMaterial( { map: texture4 } );
+
+    var sphere = new THREE.Mesh( geometry, material );
+    var sphere1 = new THREE.Mesh( geometry1, material1 );
+    var sphere2 = new THREE.Mesh( geometry2, material2 );
+    var sphere3 = new THREE.Mesh( geometry3, material3 );
+    var sphere4 = new THREE.Mesh( geometry4, material4 );
+
+    sphere.layers.set(0);
+    sphere1.layers.set(1);
+    sphere2.layers.set(2);
+    sphere3.layers.set(3);
+    sphere4.layers.set(4);
+
+    sphere.castShadow = true;
+    sphere.receiveShadow = true;
+    this.scene.add( sphere );
+    this.scene.add( sphere1 );
+    this.scene.add( sphere2 );
+    this.scene.add( sphere3 );
+    this.scene.add( sphere4 );
+
+    sphere.castShadow = true;
+    sphere.receiveShadow = true;
+    sphere.position.x = 0;
+    sphere1.position.x = 0;
+    sphere2.position.x = 0;
+    sphere3.position.x = 0;
+    sphere4.position.x = 0;
+
+    camera.position.z = 2;
+
+/////////////////////// Skybox, Stars for Scene background //////////////////////////////////
+function getRandomStarField(numberOfStars, width, height) {
+var canvas = document.createElement('CANVAS');
+
+canvas.width = width;
+canvas.height = height;
+
+var ctx = canvas.getContext('2d');
+
+ctx.fillStyle="black";
+ctx.fillRect(0, 0, width, height);
+
+for (var i = 0; i < numberOfStars; ++i) {
+var radius = Math.random() * 0.5;
+var x = Math.floor(Math.random() * width);
+var y = Math.floor(Math.random() * height);
+
+ctx.beginPath();
+ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+ctx.fillStyle = 'white';
+ctx.fill();
+}
+
+var texture = new THREE.Texture(canvas);
+texture.needsUpdate = true;
+return texture;
+};
+
+var skyBox = new THREE.BoxGeometry(1000, 700, 700);
+var skyBoxMaterial = new THREE.MeshBasicMaterial({
+map: getRandomStarField(30000, 1500, 1500),
+side: THREE.BackSide
+});
+var sky = new THREE.Mesh(skyBox, skyBoxMaterial);
+scene.add(sky);
+
+////////////////////////////////// Marker Function /////////////////////////////////
+    function Marker() {
+    THREE.Object3D.call(this);
+
+    var radius = 0.005;
+    var sphereRadius = 0.02;
+    var height = 0.05;
+
+    var material = new THREE.MeshPhongMaterial({ color: 0xbab68f });
+
+    var cone = new THREE.Mesh(new THREE.ConeBufferGeometry(radius, height, 8, 1, true), material);
+    cone.position.y = height * 0.5;
+    cone.rotation.x = Math.PI;
+
+    var sphere = new THREE.Mesh(new THREE.SphereBufferGeometry(sphereRadius, 16, 8), material);
+    sphere.position.y = height * 0.95 + sphereRadius;
+
+    this.add(cone, sphere);
+    }
+
+
+    Marker.prototype = Object.create(THREE.Object3D.prototype);
+
+    //////////////////////// Create the Marker/////////////////////////////////
+
+    function createMarker(lat, lon) {
+    var marker = new Marker();
+
+    var latRad = lat * (Math.PI / 180);
+    var lonRad = -lon * (Math.PI / 180);
+    var r = this.radius;
+
+    marker.position.set(Math.cos(latRad) * Math.cos(lonRad) * r, Math.sin(latRad) * r, Math.cos(latRad) * Math.sin(lonRad) * r);
+    marker.rotation.set(0.0, -lonRad, latRad - Math.PI * 0.5);
+
+    geometry.add(marker);
+
+    };
+
+////////////////////////////// Change Camera ////////////////////////////////////////
+
+    function changeCam(lat, lon) {
+    var latRad = lat * (Math.PI / 180);
+    var lonRad = -lon * (Math.PI / 180);
+    var r = this.radius;
+
+    camera.position.set(Math.cos(latRad) * Math.cos(lonRad) * 2, Math.sin(latRad) * 2, Math.cos(latRad) * Math.sin(lonRad) * 2);
+    camera.lookAt(Math.cos(latRad) * Math.cos(lonRad) * 1, Math.sin(latRad) * 1, Math.cos(latRad) * Math.sin(lonRad) * 1);
+
+    }
+
+////////////////////////////////DropDown Menu//////////////////////////////////
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+
+/////////////////////////////Fly To ///////////////////////////////////
+
+
+function flyTo() {
+    var in1 = document.getElementById("LatInput").value;
+    var in2 = document.getElementById("LonInput").value;
+    changeCam(in1, in2);
+}
+
+
+///////////////////////////////////////////////////////////////////////
+
+///////////////////////////// Change Texture ///////////////////////////////
+
+    // function setMat(evt) {
+    //     var src = evt.target.src ? evt.target.src : evt.target.children[0].src;
+    //     new THREE.TextureLoader().load(src, tex => {
+    //         sphere.material.map = tex;
+    //         sphere.material.needsUpdate = true;
+    //     });
+    // }
+
+    // var buttons = document.getElementsByName('button2');
+    // for(var i=0;i<buttons.length;i++)buttons[i].onclick = setMat;
+    // (function animate() {
+    //     requestAnimationFrame(animate);
+    //     controls.update();
+    //     renderer.render(scene, camera);
+    // })();
+
+//////////////////////////////// Change Layer ///////////////////////////////////
+
+function toggle0() {
+
+camera.layers.toggle( 0 );
+
+}
+
+function toggle1() {
+
+camera.layers.toggle( 1 );
+
+}
+
+function toggle2() {
+
+camera.layers.toggle( 2 );
+
+}
+
+function toggle3() {
+
+camera.layers.toggle( 3 );
+
+}
+
+function toggle4() {
+
+camera.layers.toggle( 4 );
+
+}
+
+
+///////////////////////////////// Slider Script ///////////////////////////////////
+
+document.getElementById("slider").addEventListener("change", function(child) {
+//   scene.traverse(function(child) {
+//     if (child instanceof THREE.Mesh) {
+      sphere1.material.transparent = true;
+      sphere1.material.opacity = document.getElementById("slider").value;
+      sphere1.material.needsUpdate = true;
+      sphere2.material.transparent = true;
+      sphere2.material.opacity = document.getElementById("slider").value;
+      sphere2.material.needsUpdate = true;
+      sphere3.material.transparent = true;
+      sphere3.material.opacity = document.getElementById("slider").value;
+      sphere3.material.needsUpdate = true;
+      sphere4.material.transparent = true;
+      sphere4.material.opacity = document.getElementById("slider").value;
+      sphere4.material.needsUpdate = true;
+//     }
+//   });
+});
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+    var animate = function () {
+        requestAnimationFrame( animate );
+
+        renderer.render( scene, camera );
+    };
+
+    animate();
+</script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Third party plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/js/scripts.js' %}" ></script>
+</body>
+</html>

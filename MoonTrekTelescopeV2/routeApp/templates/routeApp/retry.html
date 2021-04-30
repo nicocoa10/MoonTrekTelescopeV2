@@ -1,13 +1,14 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-
+<head>
+    <meta charset="UTF-8">
+    <title>Retry</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Home</title>
+        <title>Retry</title>
         <link rel="icon" type="image/x-icon" href= "{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/favicon.ico' %}"  />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -16,11 +17,10 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/css/styles.css' %}" rel="stylesheet"  />
-        <script src="https://threejs.org/build/three.js"></script>
-        <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+</head>
 
-    </head>
-    <body id="page-top">
+
+<body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
            <div class="container">
@@ -34,8 +34,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href=" {% url 'routeApp:index' %} ">Home</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href=" {% url 'routeApp:upload' %} ">Upload</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">Home</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Upload</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
                     </ul>
                 </div>
@@ -49,71 +49,29 @@
                 <div class="mx-auto text-center">
 
 
-                    <h1 class="mx-auto my-0 text-uppercase">MoonTrek Telescope</h1>
-
-<!--                        <input type ="image" class="moonButton" src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/lightMoon.png' %}" alt="" width=450px href="#about">-->
-                    <div id="moon-rotation" class="moon-r"  >
-                        <script>
-    var scene = new THREE.Scene();
-    var camera = new THREE.PerspectiveCamera( 45, 1050/450, 0.1, 1000 );
-
-    var renderer = new THREE.WebGLRenderer( {alpha: true} );
-    renderer.setSize( 1050, 450 );
-    document.getElementById("moon-rotation").appendChild( renderer.domElement );
-    renderer.setClearColor( 0x000000, 0 );
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-
-    var controls = new THREE.OrbitControls(camera, renderer.domElement);
-    camera.position.set( 0, 0, 0 );
-    controls.update();
-
-    const light = new THREE.PointLight( 0xffffff, 2, 200);
-    light.position.set( -50, 0, 50 );
-    light.castShadow = true;
-    scene.add( light );
-
-    light.shadow.mapSize.width = 512;
-    light.shadow.mapSize.height = 512;
-    light.shadow.camera.near = 0.5;
-    light.shadow.camera.far = 500;
-
-    var texture = new THREE.TextureLoader().load( "https://raw.githubusercontent.com/GerardRosario/3DMoonstuff/main/moonstuff/MoonColorMap2.jpg" );
-
-    var geometry = new THREE.SphereGeometry( 0.57, 62, 62);
-
-
-    var material = new THREE.MeshPhongMaterial( { map: texture } );
-
-    var sphere = new THREE.Mesh( geometry, material );
-
-    sphere.castShadow = true;
-    sphere.receiveShadow = true;
-    scene.add( sphere );
-
-
-    sphere.position.x = 0;
-
-    camera.position.z = 2;
-
-
-    var animate = function () {
-        requestAnimationFrame( animate );
-
-        sphere.rotation.y += 0.005;
-
-        renderer.render( scene, camera );
-    };
-
-    animate();
-</script>
+<!--                    <h1 class="mx-auto my-0 text-uppercase">NASA MoonTrek</h1>-->
+                    <div id="here" onclick="makeOne()" title="Trigger the failure animation">
+                    <div class="box">
+                    <div class="check1"></div>
+                        <div class="check2"></div>
+                    <div class="circle"></div>
                     </div>
 
-                    <h2 class="text-white-50 mx-auto mt-2 mb-5">MoonTrek Telescope applies data to user images of the moon </h2>
+                     </div>
 
-                    <a class="btn btn-primary js-scroll-trigger" href=" {% url 'routeApp:upload' %} ">GET STARTED</a>
                 </div>
+                <div>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">MoonTrek Telescope was unable to process your image. This could be due to: </h2>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Distorted images , blurry , or when less than 30% of moon is shown. </h2>
+                    <h2 class="text-white-50 mx-auto mt-2 mb-5">Retry with a new image .</h2>
+
+                     <a class="btn btn-dark js-scroll-trigger" href=" {% url 'routeApp:upload' %} ">RETRY</a>
+
+                </div>
+
             </div>
+
+
 
         </header>
         <!-- About-->

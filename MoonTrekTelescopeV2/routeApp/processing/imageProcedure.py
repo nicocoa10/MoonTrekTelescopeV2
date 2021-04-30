@@ -21,7 +21,7 @@ class RoutedImageCapture:
 
 
         ## Circle Detection
-        img = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/media/'+ str(self.image_raw_root), cv2.IMREAD_COLOR)
+        img = cv2.imread('media/'+ str(self.image_raw_root), cv2.IMREAD_COLOR)
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         detected_circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 0.5, 100, param1=420, param2=10)
         if detected_circles is not None:
@@ -74,34 +74,25 @@ class RoutedImageCapture:
             right = right - width
         newImg = cv2.copyMakeBorder(croppedImg, top, bottom, left, right, cv2.BORDER_CONSTANT)
 
-        #save processed image
-        result = cv2.imwrite('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/user_images_processed/processed.jpg', newImg)
-        if result == True:
-            print("File saved successfully")
-        else:
-            print("Error in saving file")
 
-        cv2.waitKey(3)
-
-        self.image_processed_root = 'user_images_processed/processed.jpg'
 
         # Produce a downsampled version of Globe Map
 
         ppd = round(newImg.shape[1] / 360)
         if (ppd <= 5):
-            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/05_LRO_ref.jpg')
+            map = cv2.imread('static/globe_all/05_LRO_ref.jpg')
 
         if (ppd <= 7):
-            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/07_LRO_ref.jpg')
+            map = cv2.imread('static/globe_all/07_LRO_ref.jpg')
 
         if (ppd <= 10):
-            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/10_LRO_ref.jpg')
+            map = cv2.imread('static/globe_all/10_LRO_ref.jpg')
 
         if (ppd <= 15):
-            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/15_LRO_ref.jpg')
+            map = cv2.imread('static/globe_all/15_LRO_ref.jpg')
 
         if (ppd <= 20):
-            map = cv2.imread('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/globe_all/20_LRO_ref.jpg')
+            map = cv2.imread('static/globe_all/20_LRO_ref.jpg')
         # resize the map
         newMap = cv2.resize(map, (newImg.shape[1], newImg.shape[0]))
 
@@ -127,11 +118,8 @@ class RoutedImageCapture:
 
         cv2.waitKey(0)
 
-        print(imMatches)
-        print(len(good_matches))
-
         result = cv2.imwrite(
-            '/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/static/user_to_globe_registration/registration.png',
+            'static/user_to_globe_registration/registration.png',
             imMatches)
         if result == True:
             print("File saved successfully")
@@ -139,6 +127,30 @@ class RoutedImageCapture:
             print("Error in saving file")
 
         user_to_globe_root = 'user_to_globe_registration/registration.png'
+
+        #Warp image section
+        # image regestration SIFT
+        ref_matched_kpts = np.float32([keypoints1[m[0].queryIdx].pt for m in good_matches])
+        sensed_matched_kpts = np.float32([keypoints2[m[0].trainIdx].pt for m in good_matches])
+
+        # Compute homography
+        H, status = cv2.findHomography(ref_matched_kpts, sensed_matched_kpts, cv2.RANSAC, 5.0)
+
+        # Warp image
+        imgAfterRegistration = cv2.warpPerspective(newImg, H, (newMapGray.shape[0], newMapGray.shape[1]))
+
+        # save processed image
+        result = cv2.imwrite(
+            'static/user_images_processed/processed.jpg',
+            imgAfterRegistration)
+        if result == True:
+            print("File saved successfully")
+        else:
+            print("Error in saving file")
+
+        cv2.waitKey(3)
+
+        self.image_processed_root = 'user_images_processed/processed.jpg'
 
         roots= [self.image_processed_root , user_to_globe_root]
         # some code here to process the WAC to be able to be used later in our 3D model

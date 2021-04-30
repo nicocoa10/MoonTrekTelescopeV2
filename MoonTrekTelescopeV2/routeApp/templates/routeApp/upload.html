@@ -24,7 +24,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Test Upload</title>
+        <title>Upload</title>
         <link rel="icon" type="image/x-icon" href= "{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/favicon.ico' %}"  />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
@@ -45,7 +45,7 @@
             <div class="container">
                 <img src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/nasa.png' %}"  alt="" width=50px>
 
-                <a class="navbar-brand js-scroll-trigger" href="#page-top">NASA MoonTrek 2.0</a>
+                <a class="navbar-brand js-scroll-trigger" href="#page-top">MoonTrek Telescope 2.0</a>
                  <img src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/csula.png' %}"  alt="" width=50px>
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
@@ -53,9 +53,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href=" {% url 'routeApp:index' %} ">Home</a></li>
+                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href=" {% url 'routeApp:upload' %} ">Upload</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Upload</a></li>
-                        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#signup">EXIF</a></li>
                     </ul>
                 </div>
             </div>
@@ -79,9 +79,77 @@
 
 <!--                    text inside boxes-->
                     <div class="container-fluid border-danger border-bottom">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        <h3>Welcome to Moon Trek Telescope Guide</h3>
+                        <div class="popover-content">
+                            <span style="font-size: 1.2em;text-align:left;display:inline-block;">
+                            Moon Trek Telescope is an application that allows you to submit your own images of the moon and recieve useful information within the field of view , such as annotations , layering , etc.</span>
+                        </div>
+
+<!--                        <div class="popover-navigation">-->
+<!--                            <button class="btn btn-success" data-role="next">-->
+<!--                                <span class="fa fa-check"></span>Start Tutorial-->
+<!--                            </button>-->
+<!--                            <button class="btn btn-primary" data-role="end" style="float:none;">Skip Tutorial-->
+<!--                            </button>-->
+<!--                        </div>-->
+                                        <!-- Slideshow container -->
+<div class="slideshow-container">
+
+  <!-- Full-width slides/quotes -->
+  <div class="mySlides">
+      <b>Begin by selecting your image of the moon on the right . For best registration results consider : </b>
+            <p>- Images of the moon with at least 30% of moon</p>
+            <p>- Clear , non blurry images</p>
+            <p>- Moon images (This can be from a telescope , camera , etc. as long as it meets above criteria)</p>
+      <i>Dont have images of the moon ? Go to the end of the guide for additional content...</i>
+
+
+
+  </div>
+
+  <div class="mySlides">
+     <b>Now you should be ready to click upload. Our application will attempt image registration. Things to consider: </b>
+            <p>- If image registers properly , we are able to annotate your image</p>
+            <p>- The next page will allow you to learn further details of your moon's view</p>
+            <p>- If registration test fails , then you will have to resubmit a better image</p>
+            <i>Dont have images of the moon ? Go to the end of the guide for additional content...</i>
+  </div>
+
+  <div class="mySlides">
+     <b>Go back in the slideshow if you still want to upload , go to next unless you dont have images to upload:  </b>
+            <p>1. Begin by selecting your image of the moon</p>
+            <p>2. click upload</p>
+
+      <i>Go to next for additional content...</i>
+
+
+  </div>
+
+      <div class="mySlides">
+     <b>If you dont have images of the moon to use, you could still test some features of our application in a generic 3D model of the moon </b>
+          <a class="btn btn-success js-scroll-trigger" href=" {% url 'routeApp:3d_model' %} ">Go to Generic 3D Model</a>
+
+
+  </div>
+
+
+</div>
+
+  <!-- Next/prev buttons -->
+  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<!-- Dots/bullets/indicators -->
+<div class="dot-container">
+                                <button class="dot" onclick="currentSlide(1)">
+                                <span class="fa fa-check"></span>Guide
+                            </button>
+
+</div>
+<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
+<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
+<!--                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>-->
 
 
 
@@ -100,18 +168,24 @@
 
 
                     <h3 class="mx-2 my-0 text-uppercase">Your upload </h3>
-                    <input type ="image" class="moonButton" src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/moon1.png' %}"  alt="" width="40%" href="#about">
-<!--                    <img src="assets/img/moon1.png" width = "40%">-->
+<!--                    <input type ="image" class="moonButton" src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/moon1.png' %}"  alt="" width="40%" href="#about">-->
+<!--&lt;!&ndash;                    <img src="assets/img/moon1.png" width = "40%">&ndash;&gt;-->
+                            <div class="container text-center row-cols-3">
+                    <p><input type="file"  accept="image/*" name="image" id="file" class="" onchange="loadFile(event)" style="display: none;"></p>
 
+                                <img src="{% static 'moontrek_frontend-main/startbootstrap-grayscale-gh-pages/assets/img/Moon+placeholder(7sc8BwjeFwY).png' %}" class ="fixedSize moonButton" id ="output" alt="lightMoon" width="80%">
+
+                    </div>
+
+                    <div class ="ring my-4" id="loadingRing"></div>
                     <div class="container-fluid border-danger border-bottom py-2">
 
-                        <form method="post" enctype="multipart/form-data">
+
+                        <form method="post" enctype="multipart/form-data" accept="image/*" name="image" id="file" onchange="loadFile(event)">
                         {% csrf_token %}
                         {{ upload_form.as_p }}
 
-
-                            <button class ="btn btn-outline-light btn-info wide-button " type="submit" >
-
+                          <button class ="btn btn-outline-light btn-info wide-button " onclick="spinRing()"type="submit" >
                                  Upload
                             </button>
 
@@ -121,7 +195,9 @@
                     </div>
 
                     <br>
-                    <p class="px-auto my-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+                    	<p id="pic-info"></p>
+                    <p class="px-auto my-0">EXIF Data : none </p>
 
 
                 </div>

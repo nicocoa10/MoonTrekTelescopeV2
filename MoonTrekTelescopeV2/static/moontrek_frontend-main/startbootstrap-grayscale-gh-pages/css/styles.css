@@ -1,3 +1,221 @@
+/**This container can be used for the appearing text descriptions of our page .They appear accordingly as the user selects a feature such as tycho , apollo 12 , etc **/
+.container-description {
+  padding-top: 15px;
+  padding-left: 10px;
+
+  color: #fff;
+  font-family: Monaco ;
+	font-size:15px;
+  text-align: left;
+
+
+  height: 200px;
+  overflow-y: scroll;
+
+
+}
+
+/* ******** slider for instructions *********** */
+/* Slideshow container */
+
+.mySlides {
+  display: none;
+  padding: 80px;
+  text-align: center;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -30px;
+  padding: 16px;
+  color: #888;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+/* Position the "next button" to the right */
+.next {
+  position: absolute;
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev {
+  position: absolute;
+  left: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+  color: white;
+}
+
+/* The dot/bullet/indicator container */
+.dot-container {
+  text-align: center;
+  padding: 20px;
+  background: #ddd;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+/* Add a background color to the active dot/circle */
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+
+
+
+/*Failure */
+.box{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  height:100px;
+  width:100px;
+  cursor:pointer;
+}
+.check1{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(45deg);
+  height:10%;
+  width:50%;
+  border-radius:5vw;
+  background-color:rgba(234,0,0,1);
+  animation:check 700ms linear;
+}
+.check2{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) rotate(-45deg);
+  height:10%;
+  width:50%;
+  border-radius:5vw;
+  background-color:rgba(234,0,0,1);
+  animation:check 700ms linear;
+}
+.circle{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  height:90%;
+  width:90%;
+  border-radius:100vw;
+  border:solid 10px rgba(234,0,0);
+  animation:spin 700ms linear;
+}
+@keyframes spin{
+  0%{
+    transform:translate(-50%,-50%) rotateX(80deg);
+  }
+  50%{
+    transform:translate(-50%,-50%) rotateX(80deg);
+  }
+  100%{
+    transform:translate(-50%,-50%) rotateX(0deg);
+  }
+}
+@keyframes check{
+  0%{
+    width:0%;
+  }
+  50%{
+    width:0%;
+  }
+  100%{
+    width:50%;
+  }
+}
+
+/* Appearing coordinates */
+.container-coordinates {
+  color: #fff;
+  font-size:25px
+
+}
+#coord {
+    color:red;
+    font-size:23px
+}
+
+
+/*Alberts ring code*/
+
+
+.ring {
+  visibility: hidden;
+  position: absolute;
+  left: 50%;
+  top: 60%;
+  transform: translate(-50%,-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  letter-spacing: 4px;
+  /*box-shadow: 0 0 5px rgba(0,0,0, .9);*/
+}
+
+.ring:before{
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  width: 70%;
+  height: 70%;
+
+  border-top: 3px solid red;
+  border-radius: 50%;
+  animation: animateCircle 0.45s linear infinite;
+}
+@keyframes animateCircle {
+  0%
+  {
+    transform: rotate(45deg);
+  }
+  100%
+  {
+    transform: rotate(360deg);
+  }
+}
+
+#myProgress {
+  width: 100%;
+  background-color: #ddd;
+  visibility: hidden;
+}
+
+#myBar {
+  width: 10%;
+  height: 30px;
+  background-color: #4CAF50;
+  text-align: center;
+  line-height: 30px;
+  color: white;
+}
+
+
 
 
 @charset "UTF-8";
@@ -9,12 +227,7 @@
 
         }
         .userImage {
-            max-width: 100%;
-            max-height: 100vh;
-            margin: auto;
 
-            --x: 50%;
-	        --y: 50%;
 
 
             border: 2px solid transparent;
@@ -106,7 +319,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 .earth-orbit{
   height:100%;
   animation:earth-revolution 365s infinite linear;
-  
+
 }
 
 @keyframes earth-revolution {
@@ -129,7 +342,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 
 .earth-orbit{
-  background-position: center; 
+  background-position: center;
   background-size:575px;
     background-repeat: no-repeat;
 }
@@ -4683,7 +4896,7 @@ input[type=button].btn-block {
   padding: 0 18px;
   background-color: white;
   max-height: 0;
-  
+
   overflow: hidden;
   transition: max-height 0.2s ease-out;
 }

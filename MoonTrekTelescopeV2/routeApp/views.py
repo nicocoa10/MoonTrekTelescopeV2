@@ -1,6 +1,11 @@
+import PIL
 from django.shortcuts import render
 # import requests
 from .forms import MoonPostForm
+from routeApp.models import MoonPost
+from PIL import Image
+import os
+from cv2 import *
 
 from .processing.imageProcedure import RoutedImageCapture
 # Create your views here.
@@ -30,8 +35,17 @@ def upload (request):
         form = MoonPostForm(request.POST,request.FILES)
         if form.is_valid():
             form.save()  # saves to database
-        # now we go to the first page ?
-        return displayView(request)
+            #check the compression rate
+            img = PIL.Image.open(MoonPost.objects.last().user_image)
+            wid, hgt = img.size
+            sizeOfImageBytes = os.path.getsize('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/media/'+ str(MoonPost.objects.last().user_image))
+            compRate = wid * hgt / sizeOfImageBytes
+            # print (compRate)
+            if compRate > 6:
+                return retry(request) #image will not pass registration or is too blurry
+            else:
+            # now we go to the first page ?
+                return displayView(request)
     else:
         form = MoonPostForm()
 
@@ -43,6 +57,10 @@ def upload (request):
     return render(request,'routeApp/upload.html', context= my_form)
 
 
+def retry(request):
+
+    return render(request,'routeApp/retry.html', context={ })
+
 
 
 
@@ -50,10 +68,12 @@ def index(request):
 
     return render(request,'routeApp/index.html', context = { })
 
+def display3DModel(request):
 
-def test(request):
+    model_dic= {
 
-    return render(request,'routeApp/test.html', context = { })
+    }
+    return render(request, "routeApp/generic3Dmodel.html", context=model_dic)
 
 
 
