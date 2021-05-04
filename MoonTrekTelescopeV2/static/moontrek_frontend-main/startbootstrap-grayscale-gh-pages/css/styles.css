@@ -4879,7 +4879,7 @@ input[type=button].btn-block {
 
 .accordion {
   overflow-anchor: none;
-  background-color: #eee;
+  background-color: #b3ffb3;
   color: #444;
   cursor: pointer;
   padding: 18px;
@@ -4890,7 +4890,7 @@ input[type=button].btn-block {
   transition: 0.4s;
 }
 .active, .accordion:hover{
-    background-color: #ccc;
+    background-color: #4dff4d;
 }
 .panel{
   padding: 0 18px;
