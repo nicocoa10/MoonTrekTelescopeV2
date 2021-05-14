@@ -1,0 +1,92 @@
+
+---------------- Installation Instructions -------------------------------
+
+This file hopes to help future teams of development if they want to run the application in their local computer
+
+This project was built mainly using python and the django framework and a combination of other libraries .
+
+- First of all youll have to get the whole project and clone it somewhere in your computer
+- Now , you will are able to run the project directly from,
+    - your terminal
+    - Pycharm (a python ide)
+
+its important that wherever you open the project an run it the following libraries are installed
+
+                        Django                3.1.7
+                        numpy                 1.20.1
+                        opencv-contrib-python 3.4.2.17
+                        Pillow                8.1.2
+                        pip                   21.0.1
+                        pytz                  2021.1
+                        setuptools            54.1.2
+                        sqlparse              0.4.1
+
+You may have to install each individually in your computer or better in your virtual environment where you will run the project
+
+
+*****  Installation through Pycharm  *****
+
+If you have Pycharm already , i believe the installation will be easier . This application is built with python , specifically through the django web framework.
+
+    - First open pycharm
+    - select open an existing project , or the open option
+    - search for the directory where you clone the project , you should select the folder inside that directory not the directory you created to clone the project. pretty much just the actual project directory. Select it and click open
+    - When you open the project it may ask you what python version you want to open it with , if this option appears select , Python 3.7.9 . Youll have to choose  3.7.9 , or if not nothing will work. You can download and install the version here  https://www.python.org/downloads/release/python-379/
+    - When you select the python version when opening the project make sure is 3.7.9  , itll appear there if you installed it .
+    - If it promtps you choose pip 21.0.1
+    - Now the project should be loaded in your window . If you look on your left there should be a similar project structure MoonTrekTelescopeV2 with another folder with the same name inside , and then inside a media , MoonTrekTelescopeV2,routeapp,static, and templates folder
+    - now lets check that all of the libraries that we need are installed in your virtual environmnet where your project is placed .
+        - Go to the botttom of pycharm there should be a terminal window , click on it
+
+            - run the following command:  pip list
+
+            - you should have the following items installed
+                        Django                3.1.7
+                        numpy                 1.20.1
+                        opencv-contrib-python 3.4.2.17
+                        Pillow                8.1.2
+                        pip                   21.0.1
+                        pytz                  2021.1
+                        setuptools            54.1.2
+                        sqlparse              0.4.1
+
+
+            - if you dont have the above items installed youll have to install them manually with pip (for example pip install Django====3.1.7
+            - You need the specific versions as above , specifically for python and opencv
+            - install each item with the pip install command .
+            - when each item is installed if you run pip list , you should see the list above . The most important versions you should keep same are for django , numpy , opencv-contrib-python , Pillow , and Python
+
+
+    -After the required libraries are installed you can run the project by running manage.py . Youll have to switch to the directory where this file is , which is in MoonTrekTelescopeV2/MoonTrekTelescopeV2/manage.py
+    - The command is : python manage.py runserver
+    - You should be able to go to  http://127.0.0.1:8000/
+
+
+
+*****  Running through terminal  *****
+
+- Youll have to create a virtual environmnet within the project with pip
+- inside the virtual environment install all of this
+                        Django                3.1.7
+                        numpy                 1.20.1
+                        opencv-contrib-python 3.4.2.17
+                        Pillow                8.1.2
+                        pip                   21.0.1
+                        pytz                  2021.1
+                        setuptools            54.1.2
+                        sqlparse              0.4.1
+-once this exact libraries are installed navigate to the folder where the manage.py folder is
+- run the command : python manage.py runserver
+- project should be loaded on http://127.0.0.1:8000/
+
+
+
+
+Final Notes :
+I recommend getting used to python and how to run a django project in your local computer for the first few days before diving into the project
+Like that youll have a better sense of the running and installation process . The running process is pretty easy as long as you know how to create a django application or your familiar with it . In pycharm is pretty easy because when you select opening
+a project itll create the virtual environment for you . You just have to make sure you install the libraries with the exact versions with pip . The python version and opencv are really important for the project to succefully run the computer vision parts .
+
+if you have any questions you can reach me to nicolas.ojeda71@gmail.com
+
+

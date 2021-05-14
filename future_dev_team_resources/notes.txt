@@ -1,0 +1,37 @@
+For future teams you can learn more about how the application works here - > https://www.youtube.com/watch?v=pgKG09oTfq0
+
+My future wishes for this app is to work on a continuation of our version (V2) . Future teams could work on the following parts i have been thinking about .
+I think i see 3 main parts of this project and ideally i wouldve liked having three teams working on this :
+
+                    - Telescope integration : feeding an image directly from a telescope into the application . Finding ways to integrate the already executed processes of circle detection , image registration , and displaying back to the user after this processes are taking place .
+
+
+                    = Improving the registration accuracy/Integration of 3D model - I think to reference correct coordinates on the telescope feed , the telescope image would have to be registered perfectly to a model where we know exactly how to get correct coordinates.
+                            - Registering to a 3d model would allow us to to get rid of the distortions that are once caused by the different phases of the moon , but another issue arises which is how to really get coordinates in the reference image.
+                            - I understand that registering to a 3d model would increase the registration accuracy but how would it be the way that the coordinates would be gotten from the reference image to then have the correct cooridnates for each pixel in the users telescope feed/image
+                            - I would recommend starting to figuring out the problem by first trying to get coordinates for each pixel in the reference image , after a procedure is found then attempt to build the right model based on the users image and then register to it .
+                            - So the steps i would recommend
+
+
+                                        - First constructing the right model based on the users image , (The model can be constructed with the JPL calls of Vector , NearestPoint , and latitude to rectangular call
+                                        I started created methods where i saw the flow of the program going , the methods for this calls can be found in MoonTrekTelescopeV2/routeApp/processing/imageProcedure.py
+
+                                        - Once a 3D model is constructed for every type of moon capture/feed from telescope , try to get an idea of how to get the correct coordinates for each pixel of the 3D moon that is visible
+
+                                        - Once there is a good idea of how to get correct coordinates then you should perform registration . Since the model was constructed to match the telescope feed ,
+                                        the registration should be really accurate .Also since you already have a good idea of how to get coordinates on the reference 3d model then once registration is
+                                        peformed you should also have a good idea of how to reference the right coordinates  on the telescope image
+
+
+
+                    - User interface integration and JPL moontrek portal data integration - Now you have a telescope feed and is registered correctly which means you know the exact lat and lon at each pixel ,
+                    now what do you display? how do you display it ? how do you use the correct information
+                    such as lat and lon to generate content for the user ? how do you make a nomenclature call ? What kind of experience youd like to create for the user ?
+
+
+
+
+ Final Notes :
+ These are the 3 parts ^ i would think future development teams could work on . All of them working on their specific section but thinking about integration of the whole system which includes all 3.
+ Maybe 1 or 2 persons managing the 3 sections and making sure integration of each can be done successfully.
+
