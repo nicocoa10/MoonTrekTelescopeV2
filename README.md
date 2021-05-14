@@ -33,7 +33,7 @@ Technologies
 - Computer Graphics , Threejs
 - UI Design/ User experience research
 
-Currently in Development
+Version 2.0 implemented
 
 To learn more about this project visit our school's project page :  https://csns.calstatela.edu/department/cs/project/view?id=7808919
 
