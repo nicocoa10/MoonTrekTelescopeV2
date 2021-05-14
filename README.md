@@ -1,27 +1,27 @@
 # MoonTrekTelescopeV2
 Upload pictures of the moon to our server that runs with Django 
 
-### Team Lead - Nicolas Ojeda 
+#### Team Lead - Nicolas Ojeda 
 
-### Communications/Customer Relations Lead - Alex Lamb
+#### Communications/Customer Relations Lead - Alex Lamb
 
-### Computer Vision Lead - Elvira Sakalenka
+#### Computer Vision Lead - Elvira Sakalenka
 
-### Front End Graphics Lead - Gerard Rosario
+#### Front End Graphics Lead - Gerard Rosario
 
-### Front End Tech Lead - Pavit Chawla 
+#### Front End Tech Lead - Pavit Chawla 
 
-### Back End Lead - Albert Ramirez 
+#### Back End Lead - Albert Ramirez 
 
-### Development (Graphics Model) - Kevin Aguilera 
+#### Development (Graphics Model) - Kevin Aguilera 
 
-### QA/Testing Lead - Jacob Frausto
+#### QA/Testing Lead - Jacob Frausto
 
-### Liaison - Natalie Gallegos
+#### Liaison - Natalie Gallegos
 
-### Liaison - Shan Malhotra
+#### Liaison - Shan Malhotra
 
-### Faculty Advisor - Weronika Cwir
+#### Faculty Advisor - Weronika Cwir
 
 # Description
 Creating a Web Application in which the user will be able to provide an image from a telescope. When feeding an image of the moon from a telescope, the application will provide additional information to the user about its moon feed. The features that are provided are important annotations such as important landing sites, local temperatures, chemical makeups of the soil -- such as iron, etc. 
