@@ -38,7 +38,7 @@ def upload (request):
             #check the compression rate
             img = PIL.Image.open(MoonPost.objects.last().user_image)
             wid, hgt = img.size
-            sizeOfImageBytes = os.path.getsize('/Users/nicolasojeda/Desktop/MoonTrekTelescopeV2/MoonTrekTelescopeV2/media/'+ str(MoonPost.objects.last().user_image))
+            sizeOfImageBytes = os.path.getsize('media/'+ str(MoonPost.objects.last().user_image))
             compRate = wid * hgt / sizeOfImageBytes
             # print (compRate)
             if compRate > 6:

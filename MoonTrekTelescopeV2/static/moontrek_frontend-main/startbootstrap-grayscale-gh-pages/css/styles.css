@@ -15,13 +15,20 @@
 
 }
 
+
+
 /* ******** slider for instructions *********** */
 /* Slideshow container */
 
 .mySlides {
   display: none;
-  padding: 80px;
+  /* padding: 16px; */
   text-align: center;
+}
+.slideshow-container{
+  border: 1px solid red;
+  margin-top: 1em;
+  font-size:.9rem;
 }
 
 .prev, .next {
@@ -307,6 +314,13 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   position:absolute;
 }
 
+.moon-r{
+  cursor: pointer;
+}
+.spacer{
+padding: 2rem;
+overflow: hidden;
+}
 .moon{
   width:15px;
   top:calc(400px + 25px - 50px);
